@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-lg-48 col-xl-20">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">View Details Here</h6>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Category_Name </th>
+                                        <th>ProductName</th>
+                                        <th>Description</th>
+                                        <th>Price</th>
+                                        <th>Product_Image</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   {% for i in register %}
+                                   <tr>
+                                     <td>{{i.Category_Name}}</td>
+                                     <td>{{i.ProductName}}</td>
+                                     <td>{{i.Description}}</td>
+                                     <td>{{i.Price}}</td>
+                                     <td>
+                                       <img src="{{i.Product_Image.url}}" width="50px" height="50px">
+                                     </td>
+                                     <td>
+                                       <a href="{% url 'EditPro' pro_id=i.id %}">
+                                         <button class="btn btn-outline-primary">Edit</button>
+                                      </a>
+                                     </td>
+                                     <td>
+                                      <a href="{% url 'DeletePro' emp_id=i.id %}">
+                                         <button class="btn btn-outline-primary">Delete</button>
+                                      </a>
+                                    </td>
+                                   </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+</body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% if messages %}
+    {% for i in messages %}
+        {% if i.tags == 'success' %}
+            <script>
+                swal('{{ i }}', '', 'success');
+            </script>
+        {% elif i.tags == 'error' %}
+            <script>
+                swal('{{ i }}', '', 'error');
+            </script>
+        {% elif i.tags == 'warning' %}
+            <script>
+                swal('{{ i }}', '', 'warning');
+            </script>
+        {% else %}
+            <script>
+                swal('{{ i }}', '', 'info');
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+</html>
+{% endblock %}
